@@ -9,4 +9,4 @@ RUN apt install unzip -y
 RUN unzip halloween.zip
 RUN cp -r halloween/* /usr/local/apache2/htdocs/
 RUN rm -rf halloween.zip halloween
-EXPOSE 80:80
+EXPOSE 80
