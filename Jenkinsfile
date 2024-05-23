@@ -54,7 +54,7 @@ pipeline {
             }
         }
     }
-    // post {
+    post {
     //     always {
     //         script {
     //             // Clean-up steps
