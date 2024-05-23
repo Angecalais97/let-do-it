@@ -10,7 +10,7 @@ pipeline {
         string(name: 'PORT', defaultValue: '7000', description: 'Port to expose')
     }
     
-    stages {
+    // stages {
         stage('Checkout') {
             steps {
                 script {
