@@ -53,10 +53,15 @@ pipeline {
                 sh 'docker push ${IMAGE}:${TAG}'
             }
         }
+
+        stage('Notify via Slack') {
+            steps {
+                slackSend channel: 'let-do-it', 
+                    color: 'good', 
+                    message: 'Build and deployment completed successfully.', 
+                    teamDomain: 'devopseasylearning', 
+                    tokenCredentialId: 'slack-cred'
+            }
+        }
     }
-    slackSend channel: 'let-do-it', 
-        color: 'good', 
-        message: 'welcome to slack notify', 
-        teamDomain: 'devopseasylearning', 
-        tokenCredentialId: 'slack-cred'
 }
