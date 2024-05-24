@@ -59,7 +59,7 @@ pipeline {
                 slackSend channel: 'let-do-it', 
                     color: 'good', 
                     message: 'Build and deployment completed successfully.', 
-                    teamDomain: 'devopseasylearning', 
+                    teamDomain: 'Devops easy learning', 
                     tokenCredentialId: 'slack-cred'
             }
         }
