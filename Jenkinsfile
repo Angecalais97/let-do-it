@@ -55,15 +55,15 @@ pipeline {
         }
     }
     post {
-    //     always {
-    //         script {
-    //             // Clean-up steps
-    //             def containerId = sh(script: "docker ps -q --filter ancestor=${IMAGE}:${TAG}", returnStdout: true).trim()
-    //             if (containerId) {
-    //                 sh "docker stop ${containerId}"
-    //                 sh "docker rm ${containerId}"
-    //             }
-    //         }
-    //     }
-    // }
+        always {
+            script {
+                // Clean-up steps
+                def containerId = sh(script: "docker ps -q --filter ancestor=${IMAGE}:${TAG}", returnStdout: true).trim()
+                if (containerId) {
+                    sh "docker stop ${containerId}"
+                    sh "docker rm ${containerId}"
+                }
+            }
+        }
+    }
 }
