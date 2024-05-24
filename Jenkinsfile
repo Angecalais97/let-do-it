@@ -7,7 +7,7 @@ pipeline {
     }
     parameters {
         string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to build')
-        string(name: 'PORT', defaultValue: '7000', description: 'Port to expose')
+        string(name: 'PORT', defaultValue: '', description: 'Port to expose')
     }
     
     stages {
