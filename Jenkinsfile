@@ -1,10 +1,12 @@
 pipeline {
     agent any
+    
     environment {
         DOCKER_HUB_USER = 's5carles'
         IMAGE = 's5carles/let-do-it'
         TAG = '0.1'
     }
+    
     parameters {
         string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to build')
         string(name: 'PORT', defaultValue: '', description: 'Port to expose')
@@ -36,6 +38,14 @@ pipeline {
             }
         }
         
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
+
         stage('Run Docker Image') {
             steps {
                 script {
