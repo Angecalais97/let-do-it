@@ -40,8 +40,11 @@ pipeline {
         
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('let-do-it') {
-                    sh 'sonar-scanner'
+                script {
+                    def scannerHome = tool 'let-do-it'
+                    withSonarQubeEnv() {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
                 }
             }
         }
