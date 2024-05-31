@@ -56,10 +56,10 @@ pipeline {
 
         stage('Notify via Slack') {
             steps {
-                slackSend channel: 'let-do-it', 
+                slackSend channel: 'jenkins-notification-ars', 
                     color: 'good', 
                     message: 'Build and deployment completed successfully.', 
-                    teamDomain: 'Devops easy learning', 
+                    teamDomain: 'Devops-easy-learning', 
                     tokenCredentialId: 'slack-cred'
             }
         }
