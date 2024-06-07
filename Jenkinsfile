@@ -8,7 +8,7 @@ pipeline {
     }
     
     parameters {
-        string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to build')
+        string(name: 'BRANCH', defaultValue: '', description: 'Branch to build')
         string(name: 'PORT', defaultValue: '', description: 'Port to expose')
     }
     
