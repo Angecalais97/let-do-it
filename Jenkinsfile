@@ -11,6 +11,7 @@ pipeline {
         string(name: 'BRANCH', defaultValue: '', description: 'Branch to build')
         string(name: 'PORT', defaultValue: '', description: 'Port to expose')
         booleanParam description: 'building job', name: 'true'
+        choice choices: ['douala', 'yde', 'baf', 'limbe ', 'buea'], name: 'town'
     }
     
     stages {
