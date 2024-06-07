@@ -10,7 +10,7 @@ pipeline {
     parameters {
         string(name: 'BRANCH', defaultValue: '', description: 'Branch to build')
         string(name: 'PORT', defaultValue: '', description: 'Port to expose')
-        booleanParam description: 'building job', name: 'build'
+        booleanParam description: 'building job', name: 'true'
     }
     
     stages {
