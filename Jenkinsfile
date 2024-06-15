@@ -1,5 +1,7 @@
 pipeline {
-    agent agent1
+    agent {
+        label 'agent1'
+}
     
     environment {
         DOCKER_HUB_USER = 's5carles'
