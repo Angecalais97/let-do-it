@@ -22,14 +22,19 @@ pipeline {
         stage('build and deploy') {
             steps {
                 echo 'Building Docker image'
-                sh '''
-                docker build -t s7 .
-                docker images
-                docker tag s7 ${env.DOCKER_IMAGE}:${BUILD_NUMBER}
-                docker images
-                docker run -d -p ${params.PORT}:80 ${env.DOCKER_IMAGE}:${BUILD_NUMBER}
-                docker ps
-                '''
+                script {
+                    def dockerImage = "s7"
+                    def dockerTag = "${env.DOCKER_IMAGE}:${BUILD_NUMBER}"
+
+                    sh """
+                    docker build -t ${dockerImage} .
+                    docker images
+                    docker tag ${dockerImage} ${dockerTag}
+                    docker images
+                    docker run -d -p ${params.PORT}:80 ${dockerTag}
+                    docker ps
+                    """
+                }
             }
         }
 
@@ -40,7 +45,7 @@ pipeline {
                     sh '''
                     docker login -u s5carles -p "${DOCKERHUB_CREDENTIAL}"
                     echo 'Pushing to Docker Hub'
-                    docker push ${env.DOCKER_IMAGE}:${BUILD_NUMBER}
+                    docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
                     '''
                 }
             }
