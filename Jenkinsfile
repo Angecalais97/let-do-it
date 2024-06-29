@@ -1,11 +1,19 @@
 pipeline {
   agent any
+  environment {
+    DOCKER_IMAGE = "s5carles/docker-image"
+    DOCKERHUB-CREDENTIAL = "docker-bub-cred"
+}
+  parameters {
+    string defaultValue: 'main', name: 'BRANCH'
+    string defaultValue: '4000', name: 'PORT'
+}
 
   stages {
     stage ('git clone') {
       steps {
         echo 'cloning repo'
-        git branch: 'main', url: 'https://github.com/Angecalais97/let-do-it.git'
+        git branch: '${params.BRANCH}', url: 'https://github.com/Angecalais97/let-do-it.git'
       }
     }
 
@@ -15,9 +23,9 @@ pipeline {
         sh '''
         docker build -t s7 .
         docker images
-        docker tag s7 s5carles/docker-image:0.0
+        docker tag s7 ${env.DOCKER_IMAGE}:$BUILD_NUMBER
         docker images
-        docker run -d -p 5001:80 s5carles/docker-image:0.0
+        docker run -d -p ${params.PORT}:80 ${env.DOCKER_IMAGE}:$BUILD_NUMBER
         docker ps
         '''
       }
@@ -27,9 +35,10 @@ pipeline {
       steps {
         echo 'loging to docker hub'
         sh '''
-        docker login -u s5carles -p dckr_pat_7Oi5rpg88Br5X8jkGFCDu8DzBtM
+        docker login -u s5carles -p ${env.DOCKERHUB-CREDENTIAL}
         echo 'pushing to docker hub'
-        docker push s5carles/docker-image:0.0
+        docker push ${env.DOCKER_IMAGE}:$BUILD_NUMBER
+        env
         '''
       }
     }
