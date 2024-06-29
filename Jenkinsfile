@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     DOCKER_IMAGE = "s5carles/docker-image"
-    DOCKERHUB-CREDENTIAL = "docker-bub-cred"
+    DOCKERHUB_CREDENTIAL = "docker-bub-cred"
 }
   parameters {
     string defaultValue: 'main', name: 'BRANCH'
