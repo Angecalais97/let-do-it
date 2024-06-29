@@ -17,7 +17,7 @@ pipeline {
         docker images
         docker tag s7 s5carles/docker-image:0.0
         docker images
-        docker run -d -p 5000:80 s5carles/docker-image:0.0
+        docker run -d -p 5001:80 s5carles/docker-image:0.0
         docker ps
         '''
       }
