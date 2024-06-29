@@ -16,6 +16,7 @@ pipeline {
         docker build -t s7 .
         docker images
         docker tag s7 s5carles/docker-image:0.0
+        docker images
         docker run -d -p 5000:80 s5carles/docker-image:0.0
         docker ps
         '''
@@ -26,7 +27,7 @@ pipeline {
       steps {
         echo 'loging to docker hub'
         sh '''
-        docker login -u s5carles -p Angecarles97
+        docker login -u s5carles -p dckr_pat_7Oi5rpg88Br5X8jkGFCDu8DzBtM
         echo 'pushing to docker hub'
         docker push s5carles/docker-image:0.0
         '''
