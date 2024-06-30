@@ -5,8 +5,8 @@ pipeline {
     
   }
   parameters {
-    string(defaulValue: 'main', description: 'branch to build', name: 'BRANCH')
-    string(defaulValue: '', description: 'port to expose', name: 'PORT')
+    string(defaultValue: 'main', description: 'branch to build', name: 'BRANCH')
+    string(defaultValue: '', description: 'port to expose', name: 'PORT')
   }
   stages {
     stage ('clone repo') {
