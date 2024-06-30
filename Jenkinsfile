@@ -36,5 +36,16 @@ pipeline {
         }
       }
     }
+    
+    stage('deploy to k8s') {
+      steps {
+        withKubeConfig([credentialsId: 'kubeconfig-cred', contextName: '', kubeConfig: '', serverUrl: '']) {
+          sh '''#!/bin/bash
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
+          '''
+        }
+      }
+    }
   }
 }
