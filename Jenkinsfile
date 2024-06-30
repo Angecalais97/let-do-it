@@ -21,10 +21,12 @@ pipeline {
 
     stage ('login AND PUSH to docker hub') {
       steps {
-        sh '''
-        docker login -u s5carles -p ${DOCKERHUB_CREDENTIAL}
-        docker push s5carles/do-it:01
-        '''
+          withCredentials([string(credentialsId: 'docker-bub-cred', variable: 'DOCKERHUB_CREDENTIAL')]) {
+            sh '''
+            docker login -u s5carles -p "${DOCKERHUB_CREDENTIAL}"
+            docker push s5carles/do-it:01
+            '''
+          }
       }
     }
   }
