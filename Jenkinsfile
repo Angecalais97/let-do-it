@@ -29,7 +29,7 @@ pipeline {
 
     stage('login AND PUSH to docker hub') {
       steps {
-        withCredentials([string(credentialsId: 'carles-docker-hub', variable: 'DOCKERHUB_CREDENTIAL')]) {
+        withCredentials([string(credentialsId: 'docker-bub-cred', variable: 'DOCKERHUB_CREDENTIAL')]) {
           sh '''#!/bin/bash
             docker login -u s5carles -p "${DOCKERHUB_CREDENTIAL}"
             docker push "${DOCKER_IMAGE}:${BUILD_NUMBER}"
@@ -37,10 +37,10 @@ pipeline {
         }
       }
     }
-    
+
     stage('deploy to k8s') {
       steps {
-        withKubeConfig([credentialsId: 'kubeconfig-cred']) {
+        withCredentials([file(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {
           sh '''#!/bin/bash
           kubectl apply -f path/to/your/deployment.yaml
           kubectl apply -f path/to/your/service.yaml
@@ -51,7 +51,7 @@ pipeline {
 
     stage('clean namespace') {
       steps {
-        withKubeConfig([credentialsId: 'kubeconfig-cred']) {
+        withCredentials([file(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {
           sh '''#!/bin/bash
           kubectl delete all --all -n ${params.NAMESPACE}
           '''
