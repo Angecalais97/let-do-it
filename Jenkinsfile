@@ -1,9 +1,17 @@
 pipeline {
   agent any
+  environment {
+    DOCKER_IMAGE = "s5carles/do-it"
+    
+  }
+  parameters {
+    string(defaulValue: 'main', description: 'branch to build', name: 'BRANCH')
+    string(defaulValue: '', description: 'port to expose', name: 'PORT')
+  }
   stages {
     stage ('clone repo') {
       steps {
-        git branch: 'main', url: 'https://github.com/Angecalais97/let-do-it/'
+        git branch: "${params.BRANCH}", url: 'https://github.com/Angecalais97/let-do-it/'
         sh 'ls -ltr'
       }
     }
@@ -11,9 +19,9 @@ pipeline {
     stage ('build image and test') {
       steps {
         sh '''
-        docker build -t s5carles/do-it:01 .
+        docker build -t "${env.DOCKER_IMAGE}:${BUILD_NUMBER}" .
         docker images
-        docker run -d -p 2001:80 s5carles/do-it:01
+        docker run -d -p "${params.PORT}":80 "${env.DOCKER_IMAGE}:${BUILD_NUMBER}"
         docker ps 
         '''
       }
@@ -24,7 +32,7 @@ pipeline {
           withCredentials([string(credentialsId: 'docker-bub-cred', variable: 'DOCKERHUB_CREDENTIAL')]) {
             sh '''
             docker login -u s5carles -p "${DOCKERHUB_CREDENTIAL}"
-            docker push s5carles/do-it:01
+            docker push "${env.DOCKER_IMAGE}:${BUILD_NUMBER}"
             '''
           }
       }
