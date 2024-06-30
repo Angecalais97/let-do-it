@@ -6,6 +6,7 @@ pipeline {
   parameters {
     string(defaultValue: 'main', description: 'branch to build', name: 'BRANCH')
     string(defaultValue: '', description: 'port to expose', name: 'PORT')
+    string(defaultValue: 'your-namespace', description: 'Kubernetes namespace to clean', name: 'NAMESPACE')
   }
   stages {
     stage('clone repo') {
@@ -39,10 +40,20 @@ pipeline {
     
     stage('deploy to k8s') {
       steps {
-        withKubeConfig([credentialsId: 'kubeconfig-cred', contextName: '', kubeConfig: '', serverUrl: '']) {
+        withKubeConfig([credentialsId: 'kubeconfig-cred']) {
           sh '''#!/bin/bash
-          kubectl apply -f deployment.yml
-          kubectl apply -f service.yml
+          kubectl apply -f path/to/your/deployment.yaml
+          kubectl apply -f path/to/your/service.yaml
+          '''
+        }
+      }
+    }
+
+    stage('clean namespace') {
+      steps {
+        withKubeConfig([credentialsId: 'kubeconfig-cred']) {
+          sh '''#!/bin/bash
+          kubectl delete all --all -n ${params.NAMESPACE}
           '''
         }
       }
