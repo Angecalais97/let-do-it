@@ -29,7 +29,7 @@ pipeline {
 
     stage('login AND PUSH to docker hub') {
       steps {
-        withCredentials([string(credentialsId: 'docker-bub-cred', variable: 'DOCKERHUB_CREDENTIAL')]) {
+        withCredentials([string(credentialsId: 'carles-docker-hub', variable: 'DOCKERHUB_CREDENTIAL')]) {
           sh '''#!/bin/bash
             docker login -u s5carles -p "${DOCKERHUB_CREDENTIAL}"
             docker push "${DOCKER_IMAGE}:${BUILD_NUMBER}"
