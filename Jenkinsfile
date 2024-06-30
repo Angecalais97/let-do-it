@@ -41,8 +41,8 @@ pipeline {
       steps {
         withKubeConfig([credentialsId: 'kubeconfig-cred', contextName: '', kubeConfig: '', serverUrl: '']) {
           sh '''#!/bin/bash
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
+          kubectl apply -f deployment.yml
+          kubectl apply -f service.yml
           '''
         }
       }
