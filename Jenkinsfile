@@ -13,7 +13,7 @@ pipeline {
         sh '''
         docker build -t s5carles/do-it:01 .
         docker images
-        docker run -d -p 2000:80 s5carles/do-it:01
+        docker run -d -p 2001:80 s5carles/do-it:01
         docker ps 
         '''
       }
