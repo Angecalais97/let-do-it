@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: do-it-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: do-it
+  template:
+    metadata:
+      labels:
+        app: do-it
+    spec:
+      containers:
+      - name: do-it-container
+        image: s5carles/do-it:latest
+        ports:
+        - containerPort: 80
