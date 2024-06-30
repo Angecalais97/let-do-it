@@ -40,10 +40,10 @@ pipeline {
 
     stage('deploy to k8s') {
       steps {
-        withCredentials([file(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {
+        withCredentials([string(credentialsId: 'k8s-token-cred', variable: 'K8S_TOKEN')]) {
           sh '''#!/bin/bash
-          kubectl apply -f path/to/your/deployment.yaml
-          kubectl apply -f path/to/your/service.yaml
+          kubectl apply -f path/to/your/deployment.yaml --token=$K8S_TOKEN
+          kubectl apply -f path/to/your/service.yaml --token=$K8S_TOKEN
           '''
         }
       }
@@ -51,9 +51,9 @@ pipeline {
 
     stage('clean namespace') {
       steps {
-        withCredentials([file(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {
+        withCredentials([string(credentialsId: 'k8s-token-cred', variable: 'K8S_TOKEN')]) {
           sh '''#!/bin/bash
-          kubectl delete all --all -n ${params.NAMESPACE}
+          kubectl delete all --all -n ${params.NAMESPACE} --token=$K8S_TOKEN
           '''
         }
       }
