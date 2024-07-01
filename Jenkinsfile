@@ -6,7 +6,7 @@ pipeline {
   parameters {
     string(defaultValue: 'main', description: 'branch to build', name: 'BRANCH')
     string(defaultValue: '', description: 'port to expose', name: 'PORT')
-    string(defaultValue: 'your-namespace', description: 'Kubernetes namespace to clean', name: 'NAMESPACE')
+    string(defaultValue: 'jenkins', description: 'Kubernetes namespace to clean', name: 'NAMESPACE')
   }
   stages {
     stage('clone repo') {
@@ -53,7 +53,7 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'k8s-token-cred', variable: 'K8S_TOKEN')]) {
           sh '''#!/bin/bash
-          kubectl delete all --all -n ${params.NAMESPACE} --token=$K8S_TOKEN
+          kubectl delete all --all -n "${params.NAMESPACE}" --token=$K8S_TOKEN
           '''
         }
       }
