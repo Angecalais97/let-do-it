@@ -53,7 +53,7 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'k8s-token-cred', variable: 'K8S_TOKEN')]) {
           sh '''#!/bin/bash
-          kubectl delete all --all -n "${params.NAMESPACE}" --token=$K8S_TOKEN
+          kubectl delete all --all -n "${NAMESPACE}" --token=$K8S_TOKEN
           '''
         }
       }
