@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    label 'k8s'
+    label 'sonar'
   }
   environment {
     DOCKER_IMAGE = "s5carles/do-it"
