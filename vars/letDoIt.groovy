@@ -1,3 +1,3 @@
-def call(name){
-  echo "$name love jenkins share library"
+def call(){
+  echo "love jenkins share library"
 }
